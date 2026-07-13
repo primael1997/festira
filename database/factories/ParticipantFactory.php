@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Edition;
 use App\Models\Participant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,6 +19,7 @@ class ParticipantFactory extends Factory
     public function definition(): array
     {
         return [
+            'edition_id' => Edition::inRandomOrder()->first()->id,
             'name' => fake()->name(),
             'sexe' => fake()->randomElement(['Masculin', 'Feminin']),
             'email' => fake()->unique()->safeEmail(),

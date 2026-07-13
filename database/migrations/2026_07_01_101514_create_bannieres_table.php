@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('bannieres', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
             $table->string('image');
-            $table->enum('status',['actif','inactif'])->default('inactif');
+            $table->string('title');
+            $table->string('description');
+            $table->string('btn_url')->nullable();
+            $table->string('public_id')->nullable();
+            $table->boolean('status')->nullable();
             $table->timestamps();
         });
     }

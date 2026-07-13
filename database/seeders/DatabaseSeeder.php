@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Edition;
 use App\Models\Participant;
 use App\Models\Post;
 use App\Models\Sponsort;
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Category::factory(10)->create();
+        Edition::factory(10)->create();
         Post::factory(30)->create();
         Participant::factory(50)->create();
         Sponsort::factory(50)->create();
