@@ -208,7 +208,7 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
                     <PostCard v-for="(post, i) in displayedPosts" :key="i" :post="post" />
                 </div>
                 <div class="mt-12 text-center">
-                    <AppButton variant="outline" size="lg">Voir plus</AppButton>
+                    <AppButton :href="route('actualites.index')" variant="outline" size="lg">Voir plus</AppButton>
                 </div>
             </Container>
         </section>

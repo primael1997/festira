@@ -4,11 +4,15 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BanniereController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/actualites', [PostController::class, 'index'])->name('actualites.index');
+Route::get('/actualites/{post:slug}', [PostController::class, 'show'])->name('actualites.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

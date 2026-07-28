@@ -10,11 +10,11 @@ const siteName = computed(() => settings.value.name_site ?? 'FESTIRA')
 const year = new Date().getFullYear()
 
 const navigation = [
-    { name: 'Accueil', href: '#accueil' },
-    { name: 'Festira', href: '#festira' },
-    { name: 'Actualités', href: '#actualites' },
-    { name: 'Médiathèque', href: '#mediatheque' },
-    { name: 'Infos pratiques', href: '#infos' },
+    { name: 'Accueil', href: '/#accueil' },
+    { name: 'Festira', href: '/#festira' },
+    { name: 'Actualités', href: '/actualites', page: true },
+    { name: 'Médiathèque', href: '/#mediatheque' },
+    { name: 'Infos pratiques', href: '/#infos' },
 ]
 
 const mobileOpen = ref(false)
@@ -43,18 +43,27 @@ const socials = computed(() => [
                     </Link>
 
                     <nav class="hidden items-center gap-10 md:flex">
-                        <a
-                            v-for="item in navigation"
-                            :key="item.href"
-                            :href="item.href"
-                            class="text-lg font-medium text-gray-700 transition hover:text-brand-700"
-                        >
-                            {{ item.name }}
-                        </a>
+                        <template v-for="item in navigation" :key="item.href">
+                            <Link
+                                v-if="item.page"
+                                :href="item.href"
+                                class="text-lg font-medium transition hover:text-brand-700"
+                                :class="page.url.startsWith(item.href) ? 'text-brand-600' : 'text-gray-700'"
+                            >
+                                {{ item.name }}
+                            </Link>
+                            <a
+                                v-else
+                                :href="item.href"
+                                class="text-lg font-medium text-gray-700 transition hover:text-brand-700"
+                            >
+                                {{ item.name }}
+                            </a>
+                        </template>
                     </nav>
 
                     <div class="hidden md:block">
-                        <AppButton href="#inscription" variant="dark" size="md">
+                        <AppButton href="/#inscription" variant="dark" size="md">
                             Inscription
                         </AppButton>
                     </div>
@@ -79,16 +88,25 @@ const socials = computed(() => [
             <div v-show="mobileOpen" class="border-t border-gray-100 md:hidden">
                 <Container>
                     <div class="flex flex-col gap-1 py-3">
-                        <a
-                            v-for="item in navigation"
-                            :key="item.href"
-                            :href="item.href"
-                            class="rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-700"
-                            @click="mobileOpen = false"
-                        >
-                            {{ item.name }}
-                        </a>
-                        <AppButton href="#inscription" variant="dark" size="sm" class="mt-2">
+                        <template v-for="item in navigation" :key="item.href">
+                            <Link
+                                v-if="item.page"
+                                :href="item.href"
+                                class="rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-700"
+                                @click="mobileOpen = false"
+                            >
+                                {{ item.name }}
+                            </Link>
+                            <a
+                                v-else
+                                :href="item.href"
+                                class="rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-700"
+                                @click="mobileOpen = false"
+                            >
+                                {{ item.name }}
+                            </a>
+                        </template>
+                        <AppButton href="/#inscription" variant="dark" size="sm" class="mt-2">
                             Inscription
                         </AppButton>
                     </div>
