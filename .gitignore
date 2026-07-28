@@ -5,3 +5,4 @@
 /public/storage
 /storage/*.key
 .env
+.vscode
