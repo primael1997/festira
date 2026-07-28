@@ -9,8 +9,10 @@ import Countdown from '@/Components/Countdown.vue'
 import PostCard from '@/Components/PostCard.vue'
 
 const props = defineProps({
+    banners: { type: Array, default: () => [] },
     posts: { type: Array, default: () => [] },
     galleryImages: { type: Array, default: () => [] },
+    sponsors: { type: Array, default: () => [] },
     countdown: { type: Object, default: null },
 })
 
@@ -40,8 +42,11 @@ const fallbackPosts = [
 
 const fallbackGallery = Array.from({ length: 12 }, (_, i) => `/images/gallery-${i + 1}.jpg`)
 
+const fallbackSponsors = Array.from({ length: 5 }, () => ({ name: 'Logo' }))
+
 const displayedPosts = computed(() => (props.posts.length ? props.posts : fallbackPosts))
 const displayedGallery = computed(() => (props.galleryImages.length ? props.galleryImages : fallbackGallery))
+const displayedSponsors = computed(() => (props.sponsors.length ? props.sponsors : fallbackSponsors))
 
 const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des échanges']
 </script>
@@ -250,11 +255,11 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
                 <SectionTitle title="Nos partenaires" align="center" />
                 <div class="mt-12 flex flex-wrap items-center justify-center gap-x-16 gap-y-10">
                     <div
-                        v-for="n in 5"
-                        :key="n"
-                        class="flex h-16 w-36 items-center justify-center rounded-xl bg-white text-sm font-medium text-gray-400 shadow-sm"
+                        v-for="(sponsor, i) in displayedSponsors"
+                        :key="sponsor.id ?? i"
+                        class="flex h-16 w-36 items-center justify-center rounded-xl bg-white px-4 text-center text-sm font-medium text-gray-500 shadow-sm"
                     >
-                        Logo
+                        {{ sponsor.name }}
                     </div>
                 </div>
             </Container>
