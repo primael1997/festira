@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('edition_id')->constrained();
             $table->string('name');
             $table->enum('sexe',['Masculin','Feminin']);
             $table->string('email');
