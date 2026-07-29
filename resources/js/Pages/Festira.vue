@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/vue3'
 import PublicLayout from '@/Layouts/PublicLayout.vue'
 import Container from '@/Components/Container.vue'
 import SectionTitle from '@/Components/SectionTitle.vue'
+import TitleUnderline from '@/Components/TitleUnderline.vue'
 
 const socials = ['/images/social/facebook.svg', '/images/social/instagram.svg', '/images/social/linkedin.svg']
 
@@ -25,7 +26,11 @@ const interests = [
     <PublicLayout>
         <section class="py-8 sm:py-12">
             <Container>
-                <img src="/images/gallery-4.jpg" alt="Festira" class="h-[280px] w-full rounded-[40px] object-cover sm:h-[440px]" />
+                <img
+                    src="/images/festira-bg.jpg"
+                    alt="Camp des Amazones de Zangnanado"
+                    class="h-[280px] w-full rounded-[40px] object-cover object-[center_20%] sm:h-[440px]"
+                />
 
                 <div class="mt-12 grid items-start gap-10 lg:grid-cols-2">
                     <div class="rounded-3xl border border-brand-200 p-6 sm:p-8">
@@ -68,7 +73,7 @@ const interests = [
             <Container>
                 <div>
                     <h2 class="text-3xl font-black text-ink sm:text-4xl">Nos objectifs</h2>
-                    <span class="mt-2 block h-1 w-40 rounded-full bg-brand-600"></span>
+                    <TitleUnderline />
                 </div>
                 <p class="mt-6 text-gray-600">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
