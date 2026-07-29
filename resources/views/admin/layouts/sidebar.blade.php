@@ -1,15 +1,15 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{route('admin.admin.dashboard')}}">Festira</a>
+            <a href="{{route('admin.dashboard')}}">Festira</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="{{route('admin.admin.dashboard')}}">Festira</a>
+            <a href="{{route('admin.dashboard')}}">Festira</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">MENU</li>
             <li class="dropdown active">
-                <a href="{{route('admin.admin.dashboard')}}" class="nav-link"><i class="fas fa-fire"></i><span>Tableau de board</span></a>
+                <a href="{{route('admin.dashboard')}}" class="nav-link"><i class="fas fa-fire"></i><span>Tableau de board</span></a>
             </li>
 
             <li><a class="nav-link" href="{{route('admin.banniere.index')}}"><i class="fas fa-pencil-ruler"></i> <span>Banniere</span></a></li>

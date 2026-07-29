@@ -213,9 +213,9 @@
                     <i class="fas fa-cog"></i> Paramètre
                 </a>
                 <div class="dropdown-divider"></div>
-                <form method="POST" action="{{ route('admin.admin.logout') }}">
+                <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
-                    <a href="{{route('admin.admin.logout')}}" onclick="event.preventDefault();
+                    <a href="{{route('admin.logout')}}" onclick="event.preventDefault();
                         this.closest('form').submit();" class="dropdown-item has-icon text-danger">
                         <i class="fas fa-sign-out-alt"></i> Déconnexion
                     </a>

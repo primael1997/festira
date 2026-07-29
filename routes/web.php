@@ -36,9 +36,9 @@ Route::group(['prefix' => 'admin','middleware' => 'redirectAdmin'], function() {
     Route::post('login', [AdminAuthController::class, 'login'])->name('admin.login.post');
 });
 
-Route::group(['middleware' =>['auth', 'verified'], 'prefix' => 'admin', 'as' => 'admin.'], function(){
-    Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'admin', 'as' => 'admin.'], function(){
+    Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::resource('banniere', BanniereController::class);
     Route::put('change-status', [BanniereController::class, 'changeStatus'])->name('banniere.change-status');
 

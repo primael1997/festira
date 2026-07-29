@@ -42,7 +42,7 @@ class PostController extends Controller
                 'image' => $post->image,
                 'content' => $post->content,
                 'category' => $post->category?->name,
-                'date' => $post->created_at?->locale('fr')->translatedFormat('F d, Y'),
+                'date' => $post->created_at?->locale('fr')->translatedFormat('d F Y'),
             ],
             'related' => Post::with('category:id,name')
                 ->where('id', '!=', $post->id)
@@ -61,7 +61,7 @@ class PostController extends Controller
             'image' => $post->image,
             'excerpt' => $post->description,
             'category' => $post->category?->name,
-            'date' => $post->created_at?->locale('fr')->translatedFormat('F d, Y'),
+            'date' => $post->created_at?->locale('fr')->translatedFormat('d F Y'),
         ];
     }
 }

@@ -13,9 +13,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $banners = Banniere::where('status', 'actif')
+        $banners = Banniere::where('status', 1)
             ->latest()
-            ->get(['id', 'title', 'image']);
+            ->get(['id', 'title', 'image', 'description', 'btn_url']);
 
         $countdown = Countdown::latest('date')->first(['title', 'date']);
 
@@ -29,7 +29,7 @@ class HomeController extends Controller
                 'image' => $post->image,
                 'excerpt' => $post->description,
                 'category' => $post->category?->name,
-                'date' => $post->created_at?->locale('fr')->translatedFormat('F d, Y'),
+                'date' => $post->created_at?->locale('fr')->translatedFormat('d F Y'),
             ]);
 
         $galleryImages = Gallerie::latest()
