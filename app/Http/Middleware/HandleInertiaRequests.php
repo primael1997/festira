@@ -36,6 +36,9 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'generalSettings' => fn () => GeneralSetting::query()->first(),
+            'flash' => [
+                'success' => fn () => $request->session()->get('success'),
+            ],
         ];
     }
 }

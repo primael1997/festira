@@ -10,12 +10,17 @@ const siteName = computed(() => settings.value.name_site ?? 'FESTIRA')
 const year = new Date().getFullYear()
 
 const navigation = [
-    { name: 'Accueil', href: '/#accueil' },
-    { name: 'Festira', href: '/#festira' },
+    { name: 'Accueil', href: '/', page: true },
+    { name: 'Festira', href: '/festira', page: true },
     { name: 'Actualités', href: '/actualites', page: true },
-    { name: 'Médiathèque', href: '/#mediatheque' },
-    { name: 'Infos pratiques', href: '/#infos' },
+    { name: 'Médiathèque', href: '/mediatheque', page: true },
+    { name: 'Infos pratiques', href: '/infos-pratiques', page: true },
 ]
+
+const isActive = (href) => {
+    const path = page.url.split('?')[0]
+    return href === '/' ? path === '/' : path.startsWith(href)
+}
 
 const mobileOpen = ref(false)
 
@@ -48,7 +53,7 @@ const socials = computed(() => [
                                 v-if="item.page"
                                 :href="item.href"
                                 class="text-lg font-medium transition hover:text-brand-700"
-                                :class="page.url.startsWith(item.href) ? 'text-brand-600' : 'text-gray-700'"
+                                :class="isActive(item.href) ? 'text-brand-600' : 'text-gray-700'"
                             >
                                 {{ item.name }}
                             </Link>

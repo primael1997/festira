@@ -29,11 +29,20 @@ const classes = computed(() => [
     sizes[props.size],
 ])
 
-const component = computed(() => (props.href ? Link : 'button'))
+const isPlainLink = computed(() => props.href && /^(https?:|#|mailto:|tel:)/.test(props.href))
+const isExternalUrl = computed(() => props.href && /^https?:/.test(props.href))
+const component = computed(() => (props.href ? (isPlainLink.value ? 'a' : Link) : 'button'))
 </script>
 
 <template>
-    <component :is="component" :href="href" :type="href ? undefined : type" :class="classes">
+    <component
+        :is="component"
+        :href="href"
+        :type="href ? undefined : type"
+        :target="isExternalUrl ? '_blank' : undefined"
+        :rel="isExternalUrl ? 'noopener' : undefined"
+        :class="classes"
+    >
         <slot />
     </component>
 </template>

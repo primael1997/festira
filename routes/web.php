@@ -3,13 +3,20 @@
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BanniereController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/festira', [PagesController::class, 'festira'])->name('festira');
+Route::get('/mediatheque', [PagesController::class, 'mediatheque'])->name('mediatheque');
+Route::get('/infos-pratiques', [PagesController::class, 'infos'])->name('infos');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/actualites', [PostController::class, 'index'])->name('actualites.index');
 Route::get('/actualites/{post:slug}', [PostController::class, 'show'])->name('actualites.show');
