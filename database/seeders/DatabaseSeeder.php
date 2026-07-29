@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
     {
         Countdown::forceCreate([
             'title' => "2ème édition du FESTIRA Agonlin",
-            'date' => now()->addMonths(7)->startOfDay()->addHours(10),
+            'date' => now()->addDays(30)->startOfDay()->addHours(10),
         ]);
     }
 

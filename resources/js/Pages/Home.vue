@@ -7,6 +7,7 @@ import SectionTitle from '@/Components/SectionTitle.vue'
 import AppButton from '@/Components/AppButton.vue'
 import Countdown from '@/Components/Countdown.vue'
 import PostCard from '@/Components/PostCard.vue'
+import TitleUnderline from '@/Components/TitleUnderline.vue'
 
 const props = defineProps({
     banners: { type: Array, default: () => [] },
@@ -96,8 +97,6 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
     <PublicLayout>
         <section id="accueil" class="py-8 sm:py-12">
             <Container>
-                <!-- Fixed ratio so every bannière renders at the same height,
-                    whatever the uploaded image's own dimensions are. -->
                 <div class="relative aspect-[1219/801] overflow-hidden rounded-[40px]">
                     <img
                         :src="currentBanner.image"
@@ -148,6 +147,42 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
             <Container>
                 <Countdown :date="countdown?.date" />
 
+                <div id="a-propos" class="mt-20 grid items-center gap-12 lg:mt-28 lg:grid-cols-2 lg:gap-20">
+                    <div>
+                        <h2 class="text-4xl font-black uppercase tracking-tight text-ink sm:text-5xl">
+                            À propos de Festira
+                        </h2>
+                        <TitleUnderline />
+
+                        <p class="mt-10 max-w-lg text-lg leading-relaxed text-gray-700">
+                            Le FESTIRA-Agonlin se veut être plus qu'un simple événement festif. C'est un
+                            cadre de retrouvailles, de convivialité, de mise en réseau et de valorisation
+                            des richesses variées de la région d'Agonlin. Il s'agit d'un creuset qui permet
+                            aux participants de découvrir et d'apprécier les multiples facettes de la
+                            culture locale.
+                        </p>
+
+                        <div class="mt-10">
+                            <AppButton :href="route('festira')" variant="dark" size="lg">
+                                En savoir plus
+                            </AppButton>
+                        </div>
+                    </div>
+
+                    <div class="relative mx-auto w-full max-w-2xl pb-[37%]">
+                        <img
+                            src="/images/about-us.jpg"
+                            alt="Danseur masqué Egungun lors du festival"
+                            class="aspect-[3/4] w-[58%] rounded-[24px] object-cover shadow-lg"
+                        />
+                        <img
+                            src="/images/zangnanado_view.jpg"
+                            alt="Panneau d'entrée de Zangnanado"
+                            class="absolute bottom-0 right-0 aspect-[3/4] w-[58%] rounded-[24px] object-cover shadow-xl ring-4 ring-blush-50"
+                        />
+                    </div>
+                </div>
+
                 <div class="relative mt-16 overflow-hidden rounded-[40px]">
                     <img src="/images/edition-bg.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
                     <div class="absolute inset-0 bg-brand-600/20"></div>
@@ -192,6 +227,7 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
                 <div class="grid items-center gap-12 lg:grid-cols-2">
                     <div>
                         <h2 class="text-4xl font-black text-ink sm:text-5xl">Médiathèque</h2>
+                        <TitleUnderline />
                         <p class="mt-6 max-w-md text-gray-600">
                             Le FESTIRA-Agonlin se veut être plus qu'un simple événement festif. C'est un
                             cadre de retrouvailles, de partage et de valorisation de notre patrimoine culturel.
