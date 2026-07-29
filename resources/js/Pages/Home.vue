@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { Head } from '@inertiajs/vue3'
 import PublicLayout from '@/Layouts/PublicLayout.vue'
 import Container from '@/Components/Container.vue'
@@ -44,9 +44,48 @@ const fallbackGallery = Array.from({ length: 12 }, (_, i) => `/images/gallery-${
 
 const fallbackSponsors = Array.from({ length: 5 }, () => ({ name: 'Logo' }))
 
+const fallbackBanners = [
+    {
+        id: 'fallback',
+        image: '/images/hero.png',
+        title: "Festival International Racines d'Agonlin",
+        description: null,
+        btn_url: null,
+    },
+]
+
 const displayedPosts = computed(() => (props.posts.length ? props.posts : fallbackPosts))
 const displayedGallery = computed(() => (props.galleryImages.length ? props.galleryImages : fallbackGallery))
 const displayedSponsors = computed(() => (props.sponsors.length ? props.sponsors : fallbackSponsors))
+const displayedBanners = computed(() => (props.banners.length ? props.banners : fallbackBanners))
+
+const activeBanner = ref(0)
+const currentBanner = computed(
+    () => displayedBanners.value[activeBanner.value] ?? displayedBanners.value[0]
+)
+
+const headline = computed(() => {
+    const [first, ...rest] = (currentBanner.value?.title ?? '').split(' ')
+    return { first, rest: rest.join(' ') }
+})
+
+let bannerTimer = null
+
+const startAutoplay = () => {
+    clearInterval(bannerTimer)
+    if (displayedBanners.value.length < 2) return
+    bannerTimer = setInterval(() => {
+        activeBanner.value = (activeBanner.value + 1) % displayedBanners.value.length
+    }, 6000)
+}
+
+const goToBanner = (index) => {
+    activeBanner.value = index
+    startAutoplay()
+}
+
+onMounted(startAutoplay)
+onBeforeUnmount(() => clearInterval(bannerTimer))
 
 const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des échanges']
 </script>
@@ -57,11 +96,13 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
     <PublicLayout>
         <section id="accueil" class="py-8 sm:py-12">
             <Container>
-                <div class="relative overflow-hidden rounded-[40px]">
+                <!-- Fixed ratio so every bannière renders at the same height,
+                    whatever the uploaded image's own dimensions are. -->
+                <div class="relative aspect-[1219/801] overflow-hidden rounded-[40px]">
                     <img
-                        src="/images/hero.png"
-                        alt="Festival International Racines d'Agonlin"
-                        class="h-full w-full object-cover"
+                        :src="currentBanner.image"
+                        :alt="currentBanner.title"
+                        class="absolute inset-0 h-full w-full object-cover"
                     />
 
                     <div class="absolute inset-0 flex items-center">
@@ -71,22 +112,33 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
                                 <img src="/images/ticket.svg" alt="" class="h-[18px] w-6" />
                             </p>
                             <h1 class="mt-4 text-4xl font-black uppercase leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
-                                <span class="text-brand-600">Festival</span><br />
-                                <span class="text-white drop-shadow-md">International</span><br />
-                                <span class="text-white drop-shadow-md">Racines d'Agonlin</span>
+                                <span class="block text-brand-600">{{ headline.first }}</span>
+                                <span v-if="headline.rest" class="block text-white drop-shadow-md">{{ headline.rest }}</span>
                             </h1>
                             <div class="mt-8">
-                                <AppButton href="#festira" variant="primary" size="lg">
+                                <AppButton :href="currentBanner.btn_url || '#festira'" variant="primary" size="lg">
                                     Découvrez l'événement
                                 </AppButton>
                             </div>
                         </div>
                     </div>
 
-                    <div class="absolute right-5 top-1/2 flex -translate-y-1/2 flex-col gap-2.5">
-                        <span class="h-2.5 w-2.5 rounded-full bg-brand-600"></span>
-                        <span class="h-2 w-2 rounded-full bg-gray-300"></span>
-                        <span class="h-2 w-2 rounded-full bg-gray-300"></span>
+                    <div
+                        v-if="displayedBanners.length > 1"
+                        class="absolute right-5 top-1/2 flex -translate-y-1/2 flex-col gap-2.5"
+                    >
+                        <button
+                            v-for="(banner, i) in displayedBanners"
+                            :key="banner.id ?? i"
+                            type="button"
+                            :aria-label="`Bannière ${i + 1}`"
+                            :aria-current="i === activeBanner"
+                            @click="goToBanner(i)"
+                            :class="[
+                                'rounded-full transition',
+                                i === activeBanner ? 'h-2.5 w-2.5 bg-brand-600' : 'h-2 w-2 bg-gray-300 hover:bg-gray-400',
+                            ]"
+                        ></button>
                     </div>
                 </div>
             </Container>

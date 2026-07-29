@@ -28,7 +28,7 @@ class PostController extends Controller
         return Inertia::render('Actualites/Index', [
             'posts' => $posts,
             'categories' => Category::orderBy('name')->pluck('name'),
-            'filters' => $request->only('search', 'category'),
+            'filters' => (object) $request->only('search', 'category'),
         ]);
     }
 

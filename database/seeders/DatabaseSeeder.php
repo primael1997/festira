@@ -155,7 +155,7 @@ class DatabaseSeeder extends Seeder
             [$rapports, 'Rapport Edition 2025'],
             [$rapports, 'Rapport Edition 2026'],
             [$officiels, 'Dossier de présentation du festival'],
-            [$officiels, 'Communiqué officiel — 2ème édition'],
+            [$officiels, 'Communiqué officiel de la 2ème édition'],
         ];
 
         foreach ($documents as [$category, $title]) {
@@ -170,13 +170,13 @@ class DatabaseSeeder extends Seeder
     private function seedEditions(): void
     {
         Edition::forceCreate([
-            'titre' => '1ère édition — Agonlin, Cotonou',
+            'titre' => '1ère édition Agonlin, Cotonou',
             'date' => now()->subYear()->startOfDay(),
             'status' => 0,
         ]);
 
         $current = Edition::forceCreate([
-            'titre' => '2ème édition — Agonlin, Cotonou',
+            'titre' => '2ème édition Agonlin, Cotonou',
             'date' => now()->addMonths(7)->startOfDay(),
             'status' => 1,
         ]);
