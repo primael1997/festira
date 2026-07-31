@@ -6,3 +6,4 @@
 /storage/*.key
 .env
 .vscode
+.DS_Store
