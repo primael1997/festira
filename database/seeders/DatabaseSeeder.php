@@ -12,7 +12,6 @@ use App\Models\Gallerie;
 use App\Models\GeneralSetting;
 use App\Models\Participant;
 use App\Models\Post;
-use App\Models\Sponsort;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -34,8 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->seedGalleries();
         $this->seedMediatheque();
         $this->seedEditions();
-
-        Sponsort::factory(12)->create();
 
         User::firstOrNew(['email' => 'admin@admin.com'])
             ->forceFill([

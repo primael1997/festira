@@ -89,6 +89,35 @@ onMounted(startAutoplay)
 onBeforeUnmount(() => clearInterval(bannerTimer))
 
 const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des échanges']
+
+const testimonials = [
+    {
+        quote: "Le FESTIRA nous permet de célébrer nos racines et de rassembler la diaspora autour d'une culture vivante.",
+        name: 'Jean Luc Ohanian',
+        role: 'Fondateur',
+        avatar: '/images/gallery-9.jpg',
+    },
+    {
+        quote: "Trois jours de rencontres, de musique et de transmission : le festival donne à voir tout ce que la région d'Agonlin a de plus vivant.",
+        name: 'Merveille',
+        role: 'Participant',
+        avatar: '/images/gallery-6.jpg',
+    },
+    {
+        quote: "Un cadre de retrouvailles qui rapproche les générations et fait rayonner notre patrimoine bien au-delà des frontières.",
+        name: 'Témoignage à remplacer',
+        role: 'Jacques',
+        avatar: '/images/gallery-7.jpg',
+    },
+]
+
+const activeTestimonial = ref(0)
+const currentTestimonial = computed(() => testimonials[activeTestimonial.value])
+
+const moveTestimonial = (step) => {
+    const total = testimonials.length
+    activeTestimonial.value = (activeTestimonial.value + step + total) % total
+}
 </script>
 
 <template>
@@ -196,8 +225,8 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
                         </div>
                         <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                             <button type="button" class="group flex items-center gap-5 text-white">
-                                <span class="flex h-20 w-20 items-center justify-center rounded-full bg-brand-600 ring-2 ring-white/50 transition group-hover:bg-brand-700 sm:h-[120px] sm:w-[120px]">
-                                    <svg viewBox="0 0 24 24" fill="currentColor" class="h-8 w-8 translate-x-0.5 sm:h-12 sm:w-12">
+                                <span class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-600 ring-2 ring-white/50 transition group-hover:bg-brand-700 sm:h-20 sm:w-20">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6 translate-x-0.5 sm:h-8 sm:w-8">
                                         <path d="M8 5v14l11-7z" />
                                     </svg>
                                 </span>
@@ -273,7 +302,7 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
 
         <section id="galerie" class="py-20">
             <Container>
-                <SectionTitle title="Notre galerie" align="center" />
+                <SectionTitle title="Notre galerie" class="uppercase" align="center" />
                 <div class="mt-12 columns-2 gap-4 lg:columns-4 lg:gap-[30px] [&>img]:mb-4 lg:[&>img]:mb-[30px]">
                     <img
                         v-for="(img, i) in displayedGallery"
@@ -291,7 +320,7 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
 
         <section id="actualites" class="bg-gray-50 py-20">
             <Container>
-                <SectionTitle title="Dernières actualités" align="center" />
+                <SectionTitle title="Dernières actualités" class="uppercase" align="center" />
                 <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                     <PostCard v-for="(post, i) in displayedPosts" :key="i" :post="post" />
                 </div>
@@ -304,16 +333,50 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
         <section class="py-20">
             <Container>
                 <SectionTitle eyebrow="Témoignages" title="Ils parlent de nous" align="center" />
-                <figure class="mx-auto mt-10 max-w-3xl text-center">
-                    <blockquote class="text-xl leading-relaxed text-gray-700 sm:text-2xl">
-                        « Le FESTIRA nous permet de célébrer nos racines et de rassembler la diaspora
-                        autour d'une culture vivante. »
-                    </blockquote>
-                    <figcaption class="mt-6">
-                        <p class="font-semibold text-ink">Jean-Luc Ohanian</p>
-                        <p class="text-sm text-gray-500">Fondateur</p>
-                    </figcaption>
-                </figure>
+
+                <div class="relative mt-12">
+                    <div class="rounded-[40px] bg-gradient-to-b from-blush-100 to-blush-50 px-6 py-16 sm:rounded-[50px] sm:px-24 sm:py-24">
+                        <figure class="mx-auto max-w-2xl text-center">
+                            <blockquote class="text-2xl font-medium leading-snug text-ink sm:text-3xl">
+                                {{ currentTestimonial.quote }}
+                            </blockquote>
+                            <figcaption class="mt-10 flex items-center justify-center gap-4">
+                                <img
+                                    :src="currentTestimonial.avatar"
+                                    alt=""
+                                    class="h-14 w-14 shrink-0 rounded-full object-cover"
+                                />
+                                <div class="text-left">
+                                    <p class="font-bold text-ink">{{ currentTestimonial.name }}</p>
+                                    <p class="text-sm text-gray-500">{{ currentTestimonial.role }}</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </div>
+
+                    <template v-if="testimonials.length > 1">
+                        <button
+                            type="button"
+                            aria-label="Témoignage précédent"
+                            @click="moveTestimonial(-1)"
+                            class="absolute left-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-ink shadow-md transition hover:bg-gray-50 sm:left-8 sm:h-14 sm:w-14"
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7 7-7m-7 7h18" />
+                            </svg>
+                        </button>
+                        <button
+                            type="button"
+                            aria-label="Témoignage suivant"
+                            @click="moveTestimonial(1)"
+                            class="absolute right-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-ink shadow-md transition hover:bg-gray-50 sm:right-8 sm:h-14 sm:w-14"
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7-7 7m7-7H3" />
+                            </svg>
+                        </button>
+                    </template>
+                </div>
             </Container>
         </section>
 
@@ -331,7 +394,7 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
                             partageons nos traditions et faisons rayonner Agonlin au-delà des frontières.
                         </p>
                         <div class="mt-8">
-                            <AppButton variant="light" size="lg">S'inscrire</AppButton>
+                            <AppButton variant="light" size="lg" class="!text-black">S'inscrire</AppButton>
                         </div>
                     </div>
                 </div>
@@ -340,7 +403,7 @@ const mediaPoints = ['Un espace de partage culturel', 'Des rencontres et des éc
 
         <section id="sponsors" class="bg-gray-50 py-20">
             <Container>
-                <SectionTitle title="Nos partenaires" align="center" />
+                <SectionTitle title="Nos partenaires" class="uppercase" align="center" />
                 <div class="mt-12 flex flex-wrap items-center justify-center gap-x-16 gap-y-10">
                     <div
                         v-for="(sponsor, i) in displayedSponsors"

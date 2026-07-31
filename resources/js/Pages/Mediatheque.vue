@@ -42,8 +42,12 @@ const programme = [
     <PublicLayout>
         <section class="py-8 sm:py-12">
             <Container>
-                <div class="flex items-center justify-center rounded-[40px] bg-gray-200 px-6 py-10">
-                    <img src="/images/hero.png" alt="" class="max-h-[220px] w-auto object-contain" />
+                <div class="overflow-hidden rounded-[40px] bg-gray-200">
+                    <img
+                        src="/images/hero.png"
+                        alt="Festival International Racines d'Agonlin"
+                        class="h-[240px] w-full object-cover sm:h-[400px]"
+                    />
                 </div>
                 <img src="/images/gallery-3.jpg" alt="" class="mx-auto mt-8 h-[220px] w-full max-w-3xl rounded-[45%] object-cover sm:h-[300px]" />
 
@@ -73,9 +77,21 @@ const programme = [
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
                             ut labore et dolore magna aliqua.
                         </p>
-                        <div class="mt-5 flex gap-3">
-                            <AppButton :href="doc.file" variant="outline" size="sm">Télécharger</AppButton>
-                            <AppButton :href="doc.file" variant="dark" size="sm">Ouvrir</AppButton>
+                        <div class="mt-5 flex flex-wrap gap-3">
+                            <AppButton :href="doc.file" variant="soft" size="md">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 3v4a1 1 0 001 1h4M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" />
+                                    <path stroke-linecap="round" d="M9 13h6M9 17h4" />
+                                </svg>
+                                Télécharger
+                            </AppButton>
+                            <AppButton :href="doc.file" variant="dark" size="md">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
+                                    <circle cx="12" cy="12" r="9" />
+                                    <path stroke-linecap="round" d="M12 11v5M12 8h.01" />
+                                </svg>
+                                Ouvrir
+                            </AppButton>
                         </div>
                     </article>
                 </div>

@@ -106,12 +106,17 @@ const interests = [
                         :key="i"
                         class="grid items-center gap-6 lg:grid-cols-2"
                     >
-                        <img
-                            :src="item.image"
-                            alt=""
-                            class="h-[300px] w-full rounded-[30px] object-cover"
-                            :class="i % 2 === 0 ? 'lg:order-1' : 'lg:order-2'"
-                        />
+                        <div class="relative" :class="i % 2 === 0 ? 'lg:order-1' : 'lg:order-2'">
+                            <span
+                                class="absolute bottom-10 top-10 w-8 rounded-2xl bg-brand-600"
+                                :class="i % 2 === 0 ? '-left-3' : '-right-3'"
+                            ></span>
+                            <img
+                                :src="item.image"
+                                alt=""
+                                class="relative h-[300px] w-full rounded-[30px] object-cover"
+                            />
+                        </div>
                         <div
                             class="rounded-[30px] bg-gray-50 p-8 shadow-sm sm:p-10"
                             :class="i % 2 === 0 ? 'lg:order-2' : 'lg:order-1'"

@@ -13,6 +13,7 @@ const variants = {
     primary: 'bg-brand-600 text-white hover:bg-brand-700 focus-visible:outline-brand-600',
     dark: 'bg-gray-900 text-white hover:bg-black focus-visible:outline-gray-900',
     light: 'bg-white text-brand-700 hover:bg-brand-50 focus-visible:outline-white',
+    soft: 'bg-gray-100 text-ink hover:bg-gray-200 focus-visible:outline-gray-400',
     outline: 'border border-brand-600 text-brand-700 hover:bg-brand-50 focus-visible:outline-brand-600',
     ghost: 'text-brand-700 hover:bg-brand-50 focus-visible:outline-brand-600',
 }

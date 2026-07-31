@@ -38,7 +38,7 @@ class HomeController extends Controller
             ->take(12)
             ->values();
 
-        $sponsors = Sponsort::get(['id', 'name']);
+        $sponsors = Sponsort::where('status', 1)->get(['id', 'name']);
 
         return Inertia::render('Home', [
             'banners' => $banners,

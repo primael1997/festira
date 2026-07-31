@@ -32,7 +32,7 @@ const filterByCategory = (category) => visit({ search: search.value || undefined
     <PublicLayout>
         <section class="py-8 sm:py-12">
             <Container>
-                <img src="/images/gallery-1.jpg" alt="" class="h-[280px] w-full rounded-[40px] object-cover sm:h-[380px]" />
+                <img src="/images/about-us.jpg" alt="" class="h-[280px] w-full rounded-[40px] object-cover sm:h-[380px]" />
 
                 <div class="mt-10 text-center">
                     <h1 class="text-4xl font-black text-ink sm:text-5xl">Nos Articles</h1>
