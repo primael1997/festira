@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_document_id')->constrained();
+            $table->string('image')->nullable();
             $table->string('title');
+            $table->string('slug');
+            $table->string('description');
             $table->string('file');
             $table->timestamps();
         });

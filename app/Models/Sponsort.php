@@ -9,4 +9,9 @@ class Sponsort extends Model
 {
     /** @use HasFactory<\Database\Factories\SponsortFactory> */
     use HasFactory;
+
+    public function edition()
+    {
+        return $this->belongsTo(Edition::class);
+    }
 }

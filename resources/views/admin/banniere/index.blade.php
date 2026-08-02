@@ -11,7 +11,6 @@
 
         <div class="section-body">
             <h2 class="section-title">Liste des Bannieres</h2>
-            <p class="section-lead">Example of some Bootstrap table components.</p>
 
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12">
@@ -27,7 +26,7 @@
                                 <table class="table table-bordered table-md">
                                     <tr>
                                         <th>#</th>
-                                        <th>Banniere</th>
+                                        <th width="300">Banniere</th>
                                         <th>Titre</th>
                                         <th>Description</th>
                                         <th>Status</th>
@@ -36,7 +35,9 @@
                                     @forelse ($baners as $key=>$baner)
                                     <tr>
                                         <td>{{++$key}}</td>
-                                        <td><x-cloudinary::image public-id="" width="50" height="10" /></td>
+                                        <td>
+                                            <x-cloudinary::image public-id="{{ $baner->public_id }}" width="80" height="80" class="img-fluid" />
+                                        </td>
                                         <td>{{$baner->title}}</td>
                                         <td>{{$baner->description}}</td>
                                         <td>
@@ -56,13 +57,13 @@
                                         <td>
                                             <div class="buttons text-center">
                                                 <a href="{{route('admin.banniere.edit',$baner->id)}}" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
-                                                <a href="#" class="btn btn-icon btn-danger delete-item"><i class="fas fa-trash"></i></a>
+                                                <a href="{{route('admin.banniere.destroy',$baner->id)}}" class="btn btn-icon btn-danger delete-item"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </td>
                                     </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="6">Pas de banniere</td>
+                                            <td class="text-center" colspan="6">Pas de banniere</td>
                                         </tr>
                                     @endforelse
                                 </table>

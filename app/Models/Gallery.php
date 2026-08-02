@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Gallerie extends Model
+class Gallery extends Model
 {
-    /** @use HasFactory<\Database\Factories\GallerieFactory> */
     use HasFactory;
 
     public function getImagesArrayAttribute(): array

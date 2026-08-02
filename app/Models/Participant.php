@@ -9,4 +9,11 @@ class Participant extends Model
 {
     /** @use HasFactory<\Database\Factories\ParticipantFactory> */
     use HasFactory;
+
+    public function edition()
+    {
+        return $this->belongsTo(Edition::class);
+    }
+
+
 }

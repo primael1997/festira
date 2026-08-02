@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Banniere;
+use App\Traits\ImageUploadTrait;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 
 class BanniereController extends Controller
 {
+    use ImageUploadTrait;
     /**
      * Display a listing of the resource.
      */
@@ -33,37 +35,25 @@ class BanniereController extends Controller
     {
         $request->validate([
             'banner' => ['required','image', 'max:2000'],
-            'title' => ['required','max:200'],
+            'title' => ['required','string','max:200'],
             'description' => ['required','max:300'],
             'btn_url' => ['url'],
             'status' => ['required']
         ]);
 
-        if ($request->hasFile('baner')) {
-            // Upload to Cloudinary using the modern API wrapper
-            $upload = Cloudinary::uploadApi()->upload(
-                $request->file('banner')->getRealPath(),
-                [
-                    'folder' => 'festira/bannieres'
-                ]
-            );
-
-            // Extract required attributes from the response array
-            $secureUrl = $upload['secure_url'];
-            $publicId  = $upload['public_id'];
-        }
+        /** Handle the image upload */
+        $image = $this->uploadImage($request, 'banner', 'uploads');
 
         Banniere::create([
-            'image' => $secureUrl,
+            'image' => $image,
             'title' => $request->title,
             'description' => $request->description,
             'btn_url' => $request->btn_url,
-            'public_id' => $publicId,
             'status' => $request->status
         ]);
 
         toastr('Banniere ajoutée!', 'success');
-        return redirect()->back();
+        return redirect()->route('admin.banniere.index');
     }
 
     /**
@@ -89,46 +79,29 @@ class BanniereController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $baner = Banniere::find($id);
+        $baner = Banniere::findOrFail($id);
 
         $request->validate([
-            'banner' => ['required','image', 'max:2000'],
+            'banner' => ['nullable','image', 'max:2000'],
             'title' => ['required','max:200'],
             'description' => ['required','max:300'],
             'btn_url' => ['url'],
             'status' => ['required']
         ]);
 
-        if ($request->hasFile('baner')) {
-            if ($baner->public_id) {
-                // Supprimer le fichier sur Cloudinary
-                $response = Cloudinary::uploadApi()->destroy($baner->public_id);
-            }
-            // Upload to Cloudinary using the modern API wrapper
-            $upload = Cloudinary::uploadApi()->upload(
-                $request->file('banner')->getRealPath(),
-                [
-                    'folder' => 'festira/bannieres'
-                ]
-            );
+        $imagePath = $this->updateImage($request, 'image', 'uploads', $baner->image);
 
-            // Extract required attributes from the response array
-            $secureUrl = $upload['secure_url'];
-            $publicId  = $upload['public_id'];
-
-        }
 
         $baner->update([
-            'image' => $secureUrl,
+            'image' => empty(!$imagePath) ? $imagePath : $baner->image,
             'title' => $request->title,
             'description' => $request->description,
             'btn_url' => $request->btn_url,
-            'public_id' => $publicId,
             'status' => $request->status
         ]);
 
-        toastr('Banniere modifiée!', 'success');
-        return redirect()->back();
+        toastr()->success('Bannière modifiée avec succès.');
+        return redirect()->route('admin.banniere.index');
     }
 
     /**
@@ -137,12 +110,7 @@ class BanniereController extends Controller
     public function destroy(string $id)
     {
         $baner = Banniere::findOrFail($id);
-        if ($baner->public_id) {
-
-            // Supprimer le fichier sur Cloudinary
-            $response = Cloudinary::uploadApi()->destroy($baner->public_id);
-
-        }
+        $this->deleteImage($baner->image);
         $baner->delete();
 
         return response(['status' => 'success', 'message' => 'Banniere supprimée!']);

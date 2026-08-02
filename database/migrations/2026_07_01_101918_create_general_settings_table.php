@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('general_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('name_site');
-            $table->string('email');
-            $table->string('phone');
+            $table->string('site_name');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('contact_address')->nullable();
             $table->string('fb');
             $table->string('insta');
             $table->timestamps();

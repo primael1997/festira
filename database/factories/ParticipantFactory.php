@@ -20,11 +20,27 @@ class ParticipantFactory extends Factory
     {
         return [
             'edition_id' => Edition::inRandomOrder()->first()->id,
-            'name' => fake()->name(),
+            'nom' => fake()->name(),
+            'prenom' => fake()->name(),
+            'secteur' => fake()->randomElement([
+                'Informatique',
+                'Télécommunications',
+                'Banque',
+                'Assurance',
+                'Agroalimentaire',
+                'BTP',
+                'Santé',
+                'Éducation',
+                'Commerce',
+                'Transport',
+            ]),
+            'structure' => fake()->name(),
             'sexe' => fake()->randomElement(['Masculin', 'Feminin']),
+            'phone' => fake()->unique()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'ville' => fake()->city(),
             'adresse' => fake()->address(),
+
         ];
     }
 }

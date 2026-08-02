@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Edition;
 use App\Models\Sponsort;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,6 +19,7 @@ class SponsortFactory extends Factory
     public function definition(): array
     {
         return [
+            'edition_id' => Edition::inRandomOrder()->first()->id,
             'name' => fake()->company(),
             'secteur' => fake()->randomElement([
                 'Informatique',

@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('sponsorts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('edition_id')->constrained();
             $table->string('name');
             $table->string('secteur');
             $table->string('responsable');
             $table->string('phone');
             $table->string('email');
             $table->string('adresse');
+            $table->string('logo')->nullable();
             $table->text('message');
-            $table->boolean('status')->nullable();
+            $table->boolean('status')->default(0);
+            $table->enum('etude',['en attente','validé','rejetté'])->default('en attente');
             $table->timestamps();
         });
     }

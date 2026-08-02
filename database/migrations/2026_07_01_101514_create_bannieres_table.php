@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('btn_url')->nullable();
             $table->string('public_id')->nullable();
-            $table->boolean('status')->nullable();
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }
