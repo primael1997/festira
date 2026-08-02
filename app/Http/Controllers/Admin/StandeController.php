@@ -153,6 +153,7 @@ class StandeController extends Controller
         $stand->logo = $logoPath;
         $stand->presentation_activite = $presentationPath;
         $stand->edition_id = $edition->id;
+        
         $stand->save();
 
         toastr('Stande modifié avec succès!', 'success');
