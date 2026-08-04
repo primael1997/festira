@@ -56,7 +56,7 @@ const readTime = computed(() => {
             </Container>
         </article>
 
-        <section v-if="related.length" class="py-16">
+        <section v-if="related.length" class="py-10 sm:py-16">
             <Container>
                 <div class="mb-10 flex items-center gap-4">
                     <span class="h-0.5 w-12 bg-brand-600"></span>

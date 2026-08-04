@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Banniere;
 use App\Models\Countdown;
-use App\Models\Gallerie;
+use App\Models\Document;
+use App\Models\Gallery;
 use App\Models\Post;
 use App\Models\Sponsort;
 use Inertia\Inertia;
@@ -32,13 +33,30 @@ class HomeController extends Controller
                 'date' => $post->created_at?->locale('fr')->translatedFormat('d F Y'),
             ]);
 
-        $galleryImages = Gallerie::latest()
+        $galleryImages = Gallery::latest()
             ->get()
             ->flatMap(fn ($gallery) => $this->parseImages($gallery->images))
             ->take(12)
             ->values();
 
-        $sponsors = Sponsort::where('status', 1)->get(['id', 'name']);
+        $sponsors = Sponsort::where('status', 1)
+            ->get(['id', 'name', 'logo'])
+            ->map(fn ($sponsor) => [
+                'id' => $sponsor->id,
+                'name' => $sponsor->name,
+                'logo' => $this->publicUrl($sponsor->logo),
+            ]);
+
+        $documents = Document::latest()
+            ->latest('id')
+            ->take(3)
+            ->get(['id', 'title', 'image', 'file'])
+            ->map(fn ($doc) => [
+                'id' => $doc->id,
+                'title' => $doc->title,
+                'image' => $this->publicUrl($doc->image),
+                'file' => $this->publicUrl($doc->file),
+            ]);
 
         return Inertia::render('Home', [
             'banners' => $banners,
@@ -46,6 +64,7 @@ class HomeController extends Controller
             'posts' => $posts,
             'galleryImages' => $galleryImages,
             'sponsors' => $sponsors,
+            'documents' => $documents,
         ]);
     }
 

@@ -6,6 +6,7 @@ import Container from '@/Components/Container.vue'
 import SectionTitle from '@/Components/SectionTitle.vue'
 import AppButton from '@/Components/AppButton.vue'
 import Accordion from '@/Components/Accordion.vue'
+import DocumentCard from '@/Components/DocumentCard.vue'
 
 const props = defineProps({
     documents: { type: Array, default: () => [] },
@@ -21,6 +22,9 @@ const fallbackGallery = Array.from({ length: 12 }, (_, i) => `/images/gallery-${
 
 const displayedDocuments = computed(() => (props.documents.length ? props.documents : fallbackDocuments))
 const displayedGallery = computed(() => (props.galleryImages.length ? props.galleryImages : fallbackGallery))
+
+// documents already arrive newest-first from the controller
+const latestDocuments = computed(() => props.documents.slice(0, 3))
 
 const bullets = [
     'Arrivée et installation des festivaliers.',
@@ -71,14 +75,17 @@ const programme = [
                         :key="doc.id ?? i"
                         class="rounded-[25px] border border-brand-200 p-5"
                     >
-                        <img :src="`/images/gallery-${(i % 12) + 1}.jpg`" alt="" class="h-52 w-full rounded-[18px] object-cover" />
+                        <img
+                            :src="doc.image ?? `/images/gallery-${(i % 12) + 1}.jpg`"
+                            :alt="doc.title"
+                            class="h-52 w-full rounded-[18px] object-cover"
+                        />
                         <h3 class="mt-4 text-xl font-bold text-brand-600">{{ doc.title }}</h3>
-                        <p class="mt-2 text-sm leading-relaxed text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-                            ut labore et dolore magna aliqua.
+                        <p v-if="doc.description" class="mt-2 text-sm leading-relaxed text-gray-600">
+                            {{ doc.description }}
                         </p>
                         <div class="mt-5 flex flex-wrap gap-3">
-                            <AppButton :href="doc.file" variant="soft" size="md">
+                            <AppButton :href="doc.file" download variant="soft" size="md">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M14 3v4a1 1 0 001 1h4M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" />
                                     <path stroke-linecap="round" d="M9 13h6M9 17h4" />
@@ -98,7 +105,7 @@ const programme = [
             </Container>
         </section>
 
-        <section class="py-16">
+        <section class="py-10 sm:py-16">
             <Container>
                 <SectionTitle title="Programme du Festival-Agonlin 2027" align="center">
                     Le FESTIRA-Agonlin offre de nombreux articles
@@ -109,27 +116,21 @@ const programme = [
             </Container>
         </section>
 
-        <section class="py-12">
+        <section v-if="latestDocuments.length" id="communique" class="py-10 sm:py-12">
             <Container>
-                <div class="mx-auto flex max-w-4xl flex-col items-center rounded-[50%] bg-gradient-to-br from-blush-100 to-blush-200 px-10 py-20 text-center sm:px-24 sm:py-24">
-                    <h2 class="text-4xl font-black text-ink sm:text-5xl">Communiqué</h2>
-                    <p class="mt-6 max-w-xl text-gray-600">
-                        Retrouvez ici toutes les informations officielles et les annonces liées à l'organisation
-                        du festival et à la participation.
-                    </p>
-                    <div class="mt-8">
-                        <AppButton variant="primary" size="lg">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 3v4a1 1 0 001 1h4M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" />
-                            </svg>
-                            Télécharger
-                        </AppButton>
-                    </div>
+                <SectionTitle title="Communiqué" class="uppercase" align="center" />
+                <p class="mx-auto mt-4 max-w-xl text-center text-gray-600">
+                    Retrouvez ici toutes les informations officielles et les annonces liées à l'organisation
+                    du festival et à la participation.
+                </p>
+
+                <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <DocumentCard v-for="doc in latestDocuments" :key="doc.id" :document="doc" />
                 </div>
             </Container>
         </section>
 
-        <section class="py-16">
+        <section class="py-10 sm:py-16">
             <Container>
                 <SectionTitle title="Notre galerie" align="center" />
                 <div class="mt-12 columns-2 gap-4 lg:columns-4 lg:gap-[30px] [&>img]:mb-4 lg:[&>img]:mb-[30px]">

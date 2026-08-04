@@ -39,14 +39,14 @@ const pad = (n) => String(n).padStart(2, '0')
 </script>
 
 <template>
-    <div class="flex flex-wrap justify-center gap-6 lg:gap-12">
+    <div class="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-12">
         <div
             v-for="unit in units"
             :key="unit.label"
-            class="flex min-w-[150px] flex-col items-center gap-5 rounded-[20px] bg-white px-12 py-9 shadow-[0_4px_20px_rgba(91,33,182,0.19)]"
+            class="flex min-w-[118px] flex-col items-center gap-2 rounded-[20px] bg-white px-6 py-6 shadow-[0_4px_20px_rgba(91,33,182,0.19)] sm:min-w-[150px] sm:gap-5 sm:px-12 sm:py-9"
         >
-            <span class="text-5xl font-extrabold leading-none text-black sm:text-[72px]">{{ pad(unit.value) }}</span>
-            <span class="text-xl font-semibold text-gray-500 sm:text-2xl">{{ unit.label }}</span>
+            <span class="text-4xl font-extrabold leading-none text-black sm:text-[72px]">{{ pad(unit.value) }}</span>
+            <span class="text-base font-semibold text-gray-500 sm:text-2xl">{{ unit.label }}</span>
         </div>
     </div>
 </template>

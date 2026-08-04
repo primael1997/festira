@@ -44,7 +44,7 @@ const submit = () => form.post(route('contact.store'), { preserveScroll: true, o
                     « Le Comité d'Organisation du FESTIRA (Festival International Racines d'Agonlin). »
                 </h1>
 
-                <div class="mt-8 flex items-center justify-center rounded-[40px] bg-gray-200 px-6 py-12">
+                <div class="mt-8 flex items-center justify-center rounded-[40px] bg-gray-200 px-5 py-8 sm:px-6 sm:py-12">
                     <img src="/images/logo.png" alt="Festira" class="max-h-[180px] w-auto object-contain" />
                 </div>
 
@@ -82,7 +82,7 @@ const submit = () => form.post(route('contact.store'), { preserveScroll: true, o
             </Container>
         </section>
 
-        <section class="py-16">
+        <section class="py-10 sm:py-16">
             <Container>
                 <SectionTitle title="Questions fréquemment posées" align="center" />
                 <div class="mx-auto mt-10 max-w-4xl">
@@ -91,7 +91,7 @@ const submit = () => form.post(route('contact.store'), { preserveScroll: true, o
             </Container>
         </section>
 
-        <section class="py-12">
+        <section class="py-8 sm:py-12">
             <Container>
                 <div class="grid gap-6 lg:grid-cols-2">
                     <h2 class="text-3xl font-black text-ink sm:text-4xl">
@@ -113,7 +113,7 @@ const submit = () => form.post(route('contact.store'), { preserveScroll: true, o
             </Container>
         </section>
 
-        <section class="py-12">
+        <section class="py-8 sm:py-12">
             <Container>
                 <div class="grid items-center gap-8 lg:grid-cols-2">
                     <div class="relative">
@@ -134,7 +134,7 @@ const submit = () => form.post(route('contact.store'), { preserveScroll: true, o
             </Container>
         </section>
 
-        <section class="py-16">
+        <section class="py-10 sm:py-16">
             <Container>
                 <div class="rounded-[40px] bg-blush-50 p-8 sm:p-12">
                     <div class="grid gap-10 lg:grid-cols-2">

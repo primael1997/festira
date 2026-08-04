@@ -8,6 +8,7 @@ import AppButton from '@/Components/AppButton.vue'
 import Countdown from '@/Components/Countdown.vue'
 import PostCard from '@/Components/PostCard.vue'
 import TitleUnderline from '@/Components/TitleUnderline.vue'
+import DocumentCard from '@/Components/DocumentCard.vue'
 
 const props = defineProps({
     banners: { type: Array, default: () => [] },
@@ -15,6 +16,7 @@ const props = defineProps({
     galleryImages: { type: Array, default: () => [] },
     sponsors: { type: Array, default: () => [] },
     countdown: { type: Object, default: null },
+    documents: { type: Array, default: () => [] },
 })
 
 const fallbackPosts = [
@@ -126,7 +128,7 @@ const moveTestimonial = (step) => {
     <PublicLayout>
         <section id="accueil" class="py-8 sm:py-12">
             <Container>
-                <div class="relative aspect-[1219/801] overflow-hidden rounded-[40px]">
+                <div class="relative h-[400px] overflow-hidden rounded-[40px] sm:h-auto sm:aspect-[1219/801]">
                     <img
                         :src="currentBanner.image"
                         :alt="currentBanner.title"
@@ -134,12 +136,12 @@ const moveTestimonial = (step) => {
                     />
 
                     <div class="absolute inset-0 flex items-center">
-                        <div class="max-w-xl px-8 sm:px-12 lg:px-16">
+                        <div class="max-w-xl px-6 sm:px-12 lg:px-16">
                             <p class="flex items-center gap-2.5 text-lg font-semibold text-white drop-shadow">
                                 Bienvenue sur notre site de billetterie !
                                 <img src="/images/ticket.svg" alt="" class="h-[18px] w-6" />
                             </p>
-                            <h1 class="mt-4 text-4xl font-black uppercase leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+                            <h1 class="mt-4 text-2xl font-black uppercase leading-[1.02] tracking-tight sm:text-4xl md:text-5xl lg:text-7xl">
                                 <span class="block text-brand-600">{{ headline.first }}</span>
                                 <span v-if="headline.rest" class="block text-white drop-shadow-md">{{ headline.rest }}</span>
                             </h1>
@@ -176,7 +178,7 @@ const moveTestimonial = (step) => {
             <Container>
                 <Countdown :date="countdown?.date" />
 
-                <div id="a-propos" class="mt-20 grid items-center gap-12 lg:mt-28 lg:grid-cols-2 lg:gap-20">
+                <div id="a-propos" class="mt-12 grid items-center gap-10 sm:mt-20 lg:mt-28 lg:grid-cols-2 lg:gap-20">
                     <div>
                         <h2 class="text-4xl font-black uppercase tracking-tight text-ink sm:text-5xl">
                             À propos de Festira
@@ -215,7 +217,7 @@ const moveTestimonial = (step) => {
                 <div class="relative mt-16 overflow-hidden rounded-[40px]">
                     <img src="/images/edition-bg.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
                     <div class="absolute inset-0 bg-brand-600/20"></div>
-                    <div class="relative flex flex-col gap-16 px-8 py-12 sm:gap-24 sm:px-16 sm:py-16">
+                    <div class="relative flex flex-col gap-10 px-5 py-8 sm:gap-24 sm:px-16 sm:py-16">
                         <div>
                             <h3 class="text-4xl font-black text-white sm:text-6xl">1<sup>ère</sup> Edition</h3>
                             <div class="mt-3 flex items-center gap-2.5 text-2xl font-medium text-white sm:text-3xl">
@@ -240,7 +242,7 @@ const moveTestimonial = (step) => {
                 <div class="mt-12 flex justify-center">
                     <a
                         href="#"
-                        class="inline-flex items-center gap-3 rounded-2xl bg-gray-900 px-8 py-5 text-lg font-semibold text-white transition hover:bg-black"
+                        class="inline-flex items-center gap-3 rounded-2xl bg-gray-900 px-5 py-4 text-base font-semibold text-white transition hover:bg-black sm:px-8 sm:py-5 sm:text-lg"
                     >
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-6 w-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M5 19h14" />
@@ -251,7 +253,7 @@ const moveTestimonial = (step) => {
             </Container>
         </section>
 
-        <section id="mediatheque" class="py-20">
+        <section id="mediatheque" class="py-12 sm:py-20">
             <Container>
                 <div class="grid items-center gap-12 lg:grid-cols-2">
                     <div>
@@ -280,27 +282,21 @@ const moveTestimonial = (step) => {
             </Container>
         </section>
 
-        <section class="py-16">
+        <section v-if="documents.length" id="communique" class="py-10 sm:py-16">
             <Container>
-                <div class="mx-auto flex max-w-4xl flex-col items-center rounded-[50%] bg-gradient-to-br from-blush-100 to-blush-200 px-10 py-20 text-center sm:px-24 sm:py-24">
-                    <h2 class="text-4xl font-black text-ink sm:text-5xl">Communiqué</h2>
-                    <p class="mt-6 max-w-xl text-gray-600">
-                        Retrouvez ici toutes les informations officielles et les annonces liées à
-                        l'organisation du festival et à la participation.
-                    </p>
-                    <div class="mt-8">
-                        <AppButton variant="primary" size="lg">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 3v4a1 1 0 001 1h4M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" />
-                            </svg>
-                            Télécharger
-                        </AppButton>
-                    </div>
+                <SectionTitle title="Communiqué" class="uppercase" align="center" />
+                <p class="mx-auto mt-4 max-w-xl text-center text-gray-600">
+                    Retrouvez ici toutes les informations officielles et les annonces liées à
+                    l'organisation du festival et à la participation.
+                </p>
+
+                <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <DocumentCard v-for="doc in documents" :key="doc.id" :document="doc" />
                 </div>
             </Container>
         </section>
 
-        <section id="galerie" class="py-20">
+        <section id="galerie" class="py-12 sm:py-20">
             <Container>
                 <SectionTitle title="Notre galerie" class="uppercase" align="center" />
                 <div class="mt-12 columns-2 gap-4 lg:columns-4 lg:gap-[30px] [&>img]:mb-4 lg:[&>img]:mb-[30px]">
@@ -318,7 +314,7 @@ const moveTestimonial = (step) => {
             </Container>
         </section>
 
-        <section id="actualites" class="bg-gray-50 py-20">
+        <section id="actualites" class="bg-gray-50 py-12 sm:py-20">
             <Container>
                 <SectionTitle title="Dernières actualités" class="uppercase" align="center" />
                 <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -330,12 +326,12 @@ const moveTestimonial = (step) => {
             </Container>
         </section>
 
-        <section class="py-20">
+        <section class="py-12 sm:py-20">
             <Container>
                 <SectionTitle eyebrow="Témoignages" title="Ils parlent de nous" align="center" />
 
                 <div class="relative mt-12">
-                    <div class="rounded-[40px] bg-gradient-to-b from-blush-100 to-blush-50 px-6 py-16 sm:rounded-[50px] sm:px-24 sm:py-24">
+                    <div class="rounded-[40px] bg-gradient-to-b from-blush-100 to-blush-50 px-5 py-10 sm:rounded-[50px] sm:px-24 sm:py-24">
                         <figure class="mx-auto max-w-2xl text-center">
                             <blockquote class="text-2xl font-medium leading-snug text-ink sm:text-3xl">
                                 {{ currentTestimonial.quote }}
@@ -380,14 +376,14 @@ const moveTestimonial = (step) => {
             </Container>
         </section>
 
-        <section id="inscription" class="py-20">
+        <section id="inscription" class="py-12 sm:py-20">
             <Container>
                 <div class="grid items-center gap-8 lg:grid-cols-2">
                     <div class="relative">
                         <span class="absolute -left-2 bottom-8 top-8 w-4 rounded-full bg-brand-600"></span>
                         <img src="/images/hero.png" alt="Festival International Racines d'Agonlin" class="relative w-full rounded-[30px]" />
                     </div>
-                    <div class="rounded-[30px] bg-gray-900 p-10 text-white sm:p-14">
+                    <div class="rounded-[30px] bg-gray-900 p-6 text-white sm:p-14">
                         <h2 class="text-4xl font-black sm:text-5xl">Rejoignez nous !</h2>
                         <p class="mt-6 text-gray-300">
                             Rejoignons-nous dans cette aventure : célébrons ensemble notre patrimoine,
@@ -401,16 +397,22 @@ const moveTestimonial = (step) => {
             </Container>
         </section>
 
-        <section id="sponsors" class="bg-gray-50 py-20">
+        <section id="sponsors" class="bg-gray-50 py-12 sm:py-20">
             <Container>
                 <SectionTitle title="Nos partenaires" class="uppercase" align="center" />
-                <div class="mt-12 flex flex-wrap items-center justify-center gap-x-16 gap-y-10">
+                <div class="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-8 sm:gap-x-16 sm:gap-y-10">
                     <div
                         v-for="(sponsor, i) in displayedSponsors"
                         :key="sponsor.id ?? i"
-                        class="flex h-16 w-36 items-center justify-center rounded-xl bg-white px-4 text-center text-sm font-medium text-gray-500 shadow-sm"
+                        class="flex h-16 w-28 items-center justify-center rounded-xl bg-white px-3 text-center text-sm font-medium text-gray-500 shadow-sm sm:w-36 sm:px-4"
                     >
-                        {{ sponsor.name }}
+                        <img
+                            v-if="sponsor.logo"
+                            :src="sponsor.logo"
+                            :alt="sponsor.name"
+                            class="max-h-10 max-w-full object-contain"
+                        />
+                        <span v-else>{{ sponsor.name }}</span>
                     </div>
                 </div>
             </Container>

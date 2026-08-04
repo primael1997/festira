@@ -7,6 +7,7 @@ const props = defineProps({
     variant: { type: String, default: 'primary' },
     size: { type: String, default: 'md' },
     type: { type: String, default: 'button' },
+    download: { type: Boolean, default: false },
 })
 
 const variants = {
@@ -30,7 +31,13 @@ const classes = computed(() => [
     sizes[props.size],
 ])
 
-const isPlainLink = computed(() => props.href && /^(https?:|#|mailto:|tel:)/.test(props.href))
+// A path with a file extension (/documents/rapport.pdf) is a real file, not an
+// Inertia page, routing it through <Link> would XHR it instead of opening it
+const looksLikeFile = /\.[a-z0-9]{2,5}(\?|#|$)/i
+
+const isPlainLink = computed(
+    () => props.href && (/^(https?:|#|mailto:|tel:)/.test(props.href) || looksLikeFile.test(props.href))
+)
 const isExternalUrl = computed(() => props.href && /^https?:/.test(props.href))
 const component = computed(() => (props.href ? (isPlainLink.value ? 'a' : Link) : 'button'))
 </script>
@@ -42,6 +49,7 @@ const component = computed(() => (props.href ? (isPlainLink.value ? 'a' : Link) 
         :type="href ? undefined : type"
         :target="isExternalUrl ? '_blank' : undefined"
         :rel="isExternalUrl ? 'noopener' : undefined"
+        :download="download || undefined"
         :class="classes"
     >
         <slot />

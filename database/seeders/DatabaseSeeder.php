@@ -8,10 +8,11 @@ use App\Models\CategoryDocument;
 use App\Models\Countdown;
 use App\Models\Document;
 use App\Models\Edition;
-use App\Models\Gallerie;
+use App\Models\Gallery;
 use App\Models\GeneralSetting;
 use App\Models\Participant;
 use App\Models\Post;
+use App\Models\Sponsort;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -32,7 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->seedBlog();
         $this->seedGalleries();
         $this->seedMediatheque();
-        $this->seedEditions();
+        $this->seedSponsors($this->seedEditions());
 
         User::firstOrNew(['email' => 'admin@admin.com'])
             ->forceFill([
@@ -47,9 +48,10 @@ class DatabaseSeeder extends Seeder
     private function seedSettings(): void
     {
         GeneralSetting::forceCreate([
-            'name_site' => 'FESTIRA',
+            'site_name' => 'FESTIRA',
             'email' => 'contact@festira.bj',
             'phone' => '+229 01 97 00 00 00',
+            'contact_address' => 'Agonlin, Cotonou, Bénin',
             'fb' => 'https://www.facebook.com/festira.agonlin',
             'insta' => 'https://www.instagram.com/festira.agonlin',
         ]);
@@ -132,13 +134,11 @@ class DatabaseSeeder extends Seeder
 
     private function seedGalleries(): void
     {
-        Gallerie::forceCreate([
-            'title' => 'Édition 2026',
+        Gallery::forceCreate([
             'images' => json_encode(collect(range(1, 6))->map(fn ($i) => "/images/gallery-{$i}.jpg")),
         ]);
 
-        Gallerie::forceCreate([
-            'title' => 'Coulisses & préparatifs',
+        Gallery::forceCreate([
             'images' => json_encode(collect(range(7, 12))->map(fn ($i) => "/images/gallery-{$i}.jpg")),
         ]);
     }
@@ -149,22 +149,25 @@ class DatabaseSeeder extends Seeder
         $officiels = CategoryDocument::forceCreate(['name' => 'Documents officiels']);
 
         $documents = [
-            [$rapports, 'Rapport Edition 2025'],
-            [$rapports, 'Rapport Edition 2026'],
-            [$officiels, 'Dossier de présentation du festival'],
-            [$officiels, 'Communiqué officiel de la 2ème édition'],
+            [$rapports, 'Rapport Edition 2025', 'gallery-1.jpg'],
+            [$rapports, 'Rapport Edition 2026', 'gallery-2.jpg'],
+            [$officiels, 'Dossier de présentation du festival', 'gallery-3.jpg'],
+            [$officiels, 'Communiqué officiel de la 2ème édition', 'gallery-4.jpg'],
         ];
 
-        foreach ($documents as [$category, $title]) {
+        foreach ($documents as [$category, $title, $image]) {
             Document::forceCreate([
                 'category_document_id' => $category->id,
                 'title' => $title,
+                'slug' => Str::slug($title),
+                'description' => "Retrouvez ici les informations officielles liées à l'organisation du festival et à la participation.",
+                'image' => "/images/{$image}",
                 'file' => '/documents/'.Str::slug($title).'.pdf',
             ]);
         }
     }
 
-    private function seedEditions(): void
+    private function seedEditions(): Edition
     {
         Edition::forceCreate([
             'titre' => '1ère édition Agonlin, Cotonou',
@@ -179,5 +182,16 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Participant::factory(40)->create(['edition_id' => $current->id]);
+
+        return $current;
+    }
+
+    private function seedSponsors(Edition $edition): void
+    {
+        Sponsort::factory(6)->create([
+            'edition_id' => $edition->id,
+            'status' => 1,
+            'etude' => 'validé',
+        ]);
     }
 }

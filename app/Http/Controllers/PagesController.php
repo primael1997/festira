@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Countdown;
 use App\Models\Document;
-use App\Models\Gallerie;
+use App\Models\Gallery;
 use Inertia\Inertia;
 
 class PagesController extends Controller
@@ -17,8 +17,17 @@ class PagesController extends Controller
     public function mediatheque()
     {
         return Inertia::render('Mediatheque', [
-            'documents' => Document::latest()->get(['id', 'title', 'file']),
-            'galleryImages' => Gallerie::latest()
+            'documents' => Document::latest()
+                ->latest('id')
+                ->get(['id', 'title', 'description', 'image', 'file'])
+                ->map(fn ($doc) => [
+                    'id' => $doc->id,
+                    'title' => $doc->title,
+                    'description' => $doc->description,
+                    'image' => $this->publicUrl($doc->image),
+                    'file' => $this->publicUrl($doc->file),
+                ]),
+            'galleryImages' => Gallery::latest()
                 ->get()
                 ->flatMap(fn ($gallery) => $gallery->images_array)
                 ->values(),

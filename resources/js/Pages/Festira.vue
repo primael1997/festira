@@ -69,7 +69,7 @@ const interests = [
             </Container>
         </section>
 
-        <section class="py-12">
+        <section class="py-8 sm:py-12">
             <Container>
                 <div>
                     <h2 class="text-3xl font-black text-ink sm:text-4xl">Nos objectifs</h2>
@@ -91,7 +91,7 @@ const interests = [
             </Container>
         </section>
 
-        <section class="py-16">
+        <section class="py-10 sm:py-16">
             <Container>
                 <SectionTitle
                     title="Intérêts des participants"
@@ -118,7 +118,7 @@ const interests = [
                             />
                         </div>
                         <div
-                            class="rounded-[30px] bg-gray-50 p-8 shadow-sm sm:p-10"
+                            class="rounded-[30px] bg-gray-50 p-6 shadow-sm sm:p-8 md:p-10"
                             :class="i % 2 === 0 ? 'lg:order-2' : 'lg:order-1'"
                         >
                             <h3 class="text-2xl font-bold uppercase text-ink">{{ item.title }}</h3>

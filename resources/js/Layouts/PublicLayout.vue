@@ -6,7 +6,7 @@ import AppButton from '@/Components/AppButton.vue'
 
 const page = usePage()
 const settings = computed(() => page.props.generalSettings ?? {})
-const siteName = computed(() => settings.value.name_site ?? 'FESTIRA')
+const siteName = computed(() => settings.value.site_name ?? 'FESTIRA')
 const year = new Date().getFullYear()
 
 const navigation = [
@@ -43,16 +43,16 @@ const socials = computed(() => [
         <header class="sticky top-0 z-40 border-b border-gray-100 bg-white/90 backdrop-blur">
             <Container>
                 <div class="flex h-20 items-center justify-between">
-                    <Link href="/" class="flex items-center">
+                    <Link href="/" class="flex shrink-0 items-center">
                         <img src="/images/logo.png" :alt="siteName" class="h-16 w-auto" />
                     </Link>
 
-                    <nav class="hidden items-center gap-10 md:flex">
+                    <nav class="hidden items-center gap-6 lg:flex xl:gap-10">
                         <template v-for="item in navigation" :key="item.href">
                             <Link
                                 v-if="item.page"
                                 :href="item.href"
-                                class="text-lg font-medium transition hover:text-brand-700"
+                                class="whitespace-nowrap text-lg font-medium transition hover:text-brand-700"
                                 :class="isActive(item.href) ? 'text-brand-600' : 'text-gray-700'"
                             >
                                 {{ item.name }}
@@ -60,14 +60,14 @@ const socials = computed(() => [
                             <a
                                 v-else
                                 :href="item.href"
-                                class="text-lg font-medium text-gray-700 transition hover:text-brand-700"
+                                class="whitespace-nowrap text-lg font-medium text-gray-700 transition hover:text-brand-700"
                             >
                                 {{ item.name }}
                             </a>
                         </template>
                     </nav>
 
-                    <div class="hidden md:block">
+                    <div class="hidden lg:block">
                         <AppButton href="/#inscription" variant="dark" size="md">
                             Inscription
                         </AppButton>
@@ -75,7 +75,7 @@ const socials = computed(() => [
 
                     <button
                         type="button"
-                        class="inline-flex items-center justify-center rounded-md p-2 text-gray-600 md:hidden"
+                        class="inline-flex items-center justify-center rounded-md p-2 text-gray-600 lg:hidden"
                         @click="mobileOpen = !mobileOpen"
                     >
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,7 +90,7 @@ const socials = computed(() => [
                 </div>
             </Container>
 
-            <div v-show="mobileOpen" class="border-t border-gray-100 md:hidden">
+            <div v-show="mobileOpen" class="border-t border-gray-100 lg:hidden">
                 <Container>
                     <div class="flex flex-col gap-1 py-3">
                         <template v-for="item in navigation" :key="item.href">
@@ -132,7 +132,7 @@ const socials = computed(() => [
                             <p class="mt-2 font-medium text-white">Festival international d'Agonlin</p>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-x-16 gap-y-10 sm:grid-cols-3">
+                        <div class="grid grid-cols-1 gap-x-8 gap-y-10 min-[420px]:grid-cols-2 sm:grid-cols-3 sm:gap-x-16">
                             <div v-for="col in footerColumns" :key="col.title">
                                 <p class="text-xl font-semibold text-white">{{ col.title }}</p>
                                 <ul class="mt-4 space-y-4">
