@@ -137,11 +137,7 @@ const moveTestimonial = (step) => {
 
                     <div class="absolute inset-0 flex items-center">
                         <div class="max-w-xl px-6 sm:px-12 lg:px-16">
-                            <p class="flex items-center gap-2.5 text-lg font-semibold text-white drop-shadow">
-                                Bienvenue sur notre site de billetterie !
-                                <img src="/images/ticket.svg" alt="" class="h-[18px] w-6" />
-                            </p>
-                            <h1 class="mt-4 text-2xl font-black uppercase leading-[1.02] tracking-tight sm:text-4xl md:text-5xl lg:text-7xl">
+                            <h1 class="text-2xl font-black uppercase leading-[1.02] tracking-tight sm:text-4xl md:text-5xl lg:text-7xl">
                                 <span class="block text-brand-600">{{ headline.first }}</span>
                                 <span v-if="headline.rest" class="block text-white drop-shadow-md">{{ headline.rest }}</span>
                             </h1>
